@@ -9,9 +9,7 @@ dependencies {
 }
 
 def profiles = 'dev'
-if (project.hasProperty('no-liquibase')) {
-    profiles += ',no-liquibase'
-}
+
 
 bootRun {
     args = []
