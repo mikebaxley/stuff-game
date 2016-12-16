@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.thymeleaf.util.StringUtils;
 
 /**
  * Authenticate a user from the database.
@@ -26,9 +27,13 @@ public class UserDetailsService implements org.springframework.security.core.use
         log.debug("Authenticating {}", login);
         
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        if (StringUtils.equalsIgnoreCase("admin", login)) {
+        	grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        } else {
+        	grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        }
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(login, "", grantedAuthorities);
-        log.debug("userDetails=", userDetails);
+        log.debug("userDetails="+ userDetails);
         return userDetails;
 //        String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
 //        Optional<User> userFromDatabase = userRepository.findOneByLogin(lowercaseLogin);
