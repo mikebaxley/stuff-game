@@ -3,6 +3,10 @@ package family.baxley.stuff;
 import java.util.List;
 
 public class Game {
+	public Game(String name) {
+		super();
+		this.name = name;
+	}
 	private List<Player> players;
 	
 	private int roundNumber = 0;

@@ -21,7 +21,27 @@ public class CreateGameVM {
 
 
 
-    @Override
+    public String getGameName() {
+		return gameName;
+	}
+
+
+
+
+
+
+
+	public void setGameName(String gameName) {
+		this.gameName = gameName;
+	}
+
+
+
+
+
+
+
+	@Override
     public String toString() {
         return "CreateGameVM{" +
             ", username='" + gameName + '\'' +

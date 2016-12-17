@@ -24,6 +24,9 @@
 
         function loadAll() {
         	GameService.findAll(function(result) {
+
+            	console.log('result: ' + result);
+            	console.log('result: ', result);
                 vm.games = result;
                 
             });
