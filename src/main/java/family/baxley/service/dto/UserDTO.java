@@ -1,5 +1,6 @@
 package family.baxley.service.dto;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.constraints.Pattern;
@@ -33,7 +34,7 @@ public class UserDTO {
     @Size(min = 2, max = 5)
     private String langKey;
 
-    private Set<String> authorities;
+    private Set<String> authorities = new HashSet<>();
 
     public UserDTO() {
     }

@@ -25,7 +25,13 @@
 
         function loadAll() {
         	GameService.findAll(function(result) {
+<<<<<<< HEAD
         		console.log('result: ', result);
+=======
+
+            	console.log('result: ' + result);
+            	console.log('result: ', result);
+>>>>>>> branch 'master' of https://github.com/mikebaxley/stuff-game.git
                 vm.games = result;
                 
             });

@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 
+import family.baxley.security.AuthoritiesConstants;
 import family.baxley.service.dto.UserDTO;
+import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 
 /**
  * REST controller for managing the current user's account.
@@ -50,8 +52,15 @@ public class AccountResource {
     @GetMapping("/account")
     @Timed
     public ResponseEntity<UserDTO> getAccount(HttpServletRequest request) {
+    	UserDTO user = new UserDTO(request.getRemoteUser());
+    	if (StringUtils.equalsIgnoreCase("admin",user.getLogin()) ) {
+    		user.getAuthorities().add(AuthoritiesConstants.ADMIN);
+    	} else {
+    		user.getAuthorities().add(AuthoritiesConstants.USER);
+    	}
     	
-        return new ResponseEntity<>(new UserDTO(request.getRemoteUser()), HttpStatus.OK);
+    	
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 //    /**
