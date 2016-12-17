@@ -63,6 +63,14 @@ public class StuffApp {
             log.error("You have misconfigured your application! It should not" +
                 "run with both the 'dev' and 'cloud' profiles at the same time.");
         }
+        
+        for(Integer i=1; i<=3; i++){
+        	Game game = new Game();
+        	game.setName("Game" + i.toString());
+        	gameList.add(game);
+        }
+        
+        
     }
 
     /**
