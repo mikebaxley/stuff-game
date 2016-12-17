@@ -136,3 +136,6 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
+
+/gradle.properties
+gradle.properties
