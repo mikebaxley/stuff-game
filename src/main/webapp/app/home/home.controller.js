@@ -5,21 +5,33 @@
         .module('stuffApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'GameService', '$state'];
 
-    function HomeController ($scope, Principal, LoginService, $state) {
+    function HomeController ($scope, Principal, LoginService, GameService, $state) {
         var vm = this;
 
         vm.account = null;
         vm.isAuthenticated = null;
         vm.login = LoginService.open;
         vm.register = register;
+        vm.games = null;
+        
         $scope.$on('authenticationSuccess', function() {
             getAccount();
         });
 
+        loadAll();
+
+        function loadAll() {
+        	GameService.findAll(function(result) {
+                vm.games = result;
+                
+            });
+        }
+        
         getAccount();
 
+        
         function getAccount() {
             Principal.identity().then(function(account) {
                 vm.account = account;
