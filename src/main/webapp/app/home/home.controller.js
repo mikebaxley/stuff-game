@@ -16,6 +16,7 @@
         vm.register = register;
         vm.games = null;
         vm.createGameDialog = GameCreateService.open;
+        vm.refreshGameTable = refreshGameTable;
         
         $scope.$on('authenticationSuccess', function() {
             getAccount();
@@ -25,13 +26,6 @@
 
         function loadAll() {
         	GameService.findAll(function(result) {
-<<<<<<< HEAD
-        		console.log('result: ', result);
-=======
-
-            	console.log('result: ' + result);
-            	console.log('result: ', result);
->>>>>>> branch 'master' of https://github.com/mikebaxley/stuff-game.git
                 vm.games = result;
                 
             });

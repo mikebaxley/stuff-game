@@ -20,7 +20,6 @@
         return service;
 
         function open () {
-        	console.log('Gamecreate open');
             if (modalInstance !== null) return;
             modalInstance = $uibModal.open({
                 animation: true,
