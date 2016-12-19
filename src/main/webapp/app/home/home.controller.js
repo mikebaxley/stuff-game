@@ -5,31 +5,28 @@
         .module('stuffApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'GameService', 'GameCreateService', '$state'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'GameService', 'GameCreateService', 'GameListService', '$state'];
 
-    function HomeController ($scope, Principal, LoginService, GameService, GameCreateService, $state) {
+    function HomeController ($scope, Principal, LoginService, GameService, GameCreateService, GameListService, $state) {
         var vm = this;
-
+        
         vm.account = null;
         vm.isAuthenticated = null;
         vm.login = LoginService.open;
         vm.register = register;
         vm.games = null;
         vm.createGameDialog = GameCreateService.open;
-        vm.refreshGameTable = refreshGameTable;
         
         $scope.$on('authenticationSuccess', function() {
             getAccount();
         });
 
-        loadAll();
-
-        function loadAll() {
-        	GameService.findAll(function(result) {
-                vm.games = result;
-                
-            });
-        }
+        GameListService.connect();
+        GameListService.subscribe();
+        GameListService.receive().then(null, null, function(gameList) {
+        	console.log('Got game list: ', gameList);
+        	vm.games = gameList;
+        });
         
         getAccount();
 
@@ -45,6 +42,7 @@
         }
         function createGame() {
             GameCreateService.open();
+            GameListService.update();
         }
     }
 })();

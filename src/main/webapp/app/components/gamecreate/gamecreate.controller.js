@@ -5,9 +5,9 @@
         .module('stuffApp')
         .controller('GameCreateController', GameCreateController);
 
-    GameCreateController.$inject = ['$http', '$rootScope', '$state', '$timeout',  '$uibModalInstance'];
+    GameCreateController.$inject = ['$http', '$rootScope', '$state', '$timeout',  '$uibModalInstance', 'GameListService'];
 
-    function GameCreateController ($http, $rootScope, $state, $timeout,  $uibModalInstance) {
+    function GameCreateController ($http, $rootScope, $state, $timeout,  $uibModalInstance, GameListService) {
         var vm = this;
 
         vm.invalidName = false;
@@ -38,6 +38,8 @@
   
             $http.post('api/games', data).success(function (data, status, headers)  {
                 $uibModalInstance.close();
+                console.log('Game created');
+                GameListService.update();
             });
         }
     }

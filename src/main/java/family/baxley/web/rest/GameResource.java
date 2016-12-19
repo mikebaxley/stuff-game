@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,9 +28,12 @@ import family.baxley.web.rest.vm.CreateGameVM;
 @RequestMapping("/api")
 public class GameResource {
 	private static final Logger log = LoggerFactory.getLogger(GameResource.class);
+	
+	@Autowired
+	private SimpMessagingTemplate template;
+	
 	@Autowired
 	private List<Game> gameList;
-	
 	
     @GetMapping("/games")
     @Timed
@@ -47,5 +51,8 @@ public class GameResource {
     	log.debug("GameResource.createGame [" +jsonLogger+"]");
     	
     	gameList.add(new Game(jsonLogger.getGameName()));
+    	
+    	log.debug("Sending game list");
+    	this.template.convertAndSend("/sendgamelist", gameList);
     }
 }
